@@ -1,80 +1,216 @@
-# 🏗 Scaffold-ETH 2
+# 🎁 GIV INIT - Plataforma de Donaciones Crypto con Yield Sostenible
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+GIV INIT es una plataforma descentralizada que facilita donaciones crypto a comunidades builder web3 con yield recurrente y UX ultra simple. Permite donar cualquier ERC-20, automatiza el routing de fondos (95% a la comunidad, 5% a un vault Morpho que genera yield sostenible) y proporciona transparencia total con reporting automático.
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+## 📋 Descripción del Proyecto
 
-⚙️ Built using NextJS, RainbowKit, Foundry, Wagmi, Viem, and Typescript.
+**Problema:** Las comunidades builder web3 en México carecen de financiamiento sostenible recurrente. Los donantes enfrentan plataformas fragmentadas, UX frustrante, altos fees y falta de trazabilidad del impacto.
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+**Solución:** Plataforma que permite donaciones crypto en menos de 30 segundos con:
+- Donación en cualquier ERC-20 (USDC, DAI, ETH, etc.)
+- Swap automático a WETH vía Uniswap V4
+- Fee del 5% que se deposita automáticamente en un vault Morpho para generar yield sostenible
+- Dashboard transparente con historial de donaciones y yield generado
+- Deploy en Base Sepolia (testnet)
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+## 🏗️ Stack Tecnológico
 
-## Requirements
+Este proyecto está construido con **Scaffold-ETH 2** y utiliza:
 
-Before you begin, you need to install the following tools:
+- **Smart Contracts:** Foundry, Solidity, Uniswap V4 Hooks, Morpho Blue, ERC-4626
+- **Frontend:** Next.js 14 (App Router), TypeScript, shadcn/ui, Tailwind CSS
+- **Blockchain:** Wagmi, Viem, RainbowKit
+- **Network:** Base Sepolia (testnet)
 
-- [Node (>= v20.18.3)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
-
-## Quickstart
-
-To get started with Scaffold-ETH 2, follow the steps below:
-
-1. Install dependencies if it was skipped in CLI:
+## 📁 Estructura del Proyecto
 
 ```
-cd my-dapp-example
+giv-init/
+├── packages/
+│   ├── foundry/          # Smart contracts y scripts de deployment
+│   │   ├── contracts/    # Contratos Solidity
+│   │   ├── script/       # Scripts de deployment
+│   │   ├── test/         # Tests de contratos
+│   │   └── foundry.toml  # Configuración de Foundry
+│   │
+│   └── nextjs/           # Frontend Next.js
+│       ├── app/          # Páginas y layouts (App Router)
+│       ├── components/   # Componentes React
+│       ├── hooks/        # Custom hooks para contratos
+│       ├── contracts/    # Tipos y ABIs generados
+│       └── scaffold.config.ts  # Configuración de redes
+│
+└── documents/            # Documentación del proyecto
+    ├── tickets/          # Tickets de desarrollo
+    └── giv-init-mvp-prd.md  # PRD completo
+```
+
+## 🚀 Quickstart
+
+### Requisitos Previos
+
+Antes de comenzar, necesitas instalar:
+
+- [Node.js](https://nodejs.org/) (>= v20.18.3)
+- [Yarn](https://yarnpkg.com/) (v1 o v2+)
+- [Git](https://git-scm.com/downloads)
+- [Foundry](https://book.getfoundry.sh/getting-started/installation) (para compilar contratos)
+
+### Instalación
+
+1. Clona el repositorio e instala las dependencias:
+
+```bash
 yarn install
 ```
 
-2. Run a local network in the first terminal:
+2. Inicia una red local en la primera terminal:
 
-```
+```bash
 yarn chain
 ```
 
-This command starts a local Ethereum network using Foundry. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/foundry/foundry.toml`.
+Esto inicia una blockchain local usando Foundry Anvil en `http://127.0.0.1:8545`.
 
-3. On a second terminal, deploy the test contract:
+3. En una segunda terminal, despliega el contrato de prueba:
 
-```
+```bash
 yarn deploy
 ```
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/foundry/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/foundry/script` to deploy the contract to the network. You can also customize the deploy script.
+Esto despliega el contrato de prueba a la red local. Los contratos se encuentran en `packages/foundry/contracts` y los scripts de deployment en `packages/foundry/script`.
 
-4. On a third terminal, start your NextJS app:
+4. En una tercera terminal, inicia la aplicación Next.js:
 
-```
+```bash
 yarn start
 ```
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+Visita la aplicación en: `http://localhost:3000`
 
-Run smart contract test with `yarn foundry:test`
+Puedes interactuar con tus contratos usando la página `Debug Contracts`.
 
-- Edit your smart contracts in `packages/foundry/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/foundry/script`
+## 🔧 Comandos Disponibles
 
+### Desarrollo
 
-## Documentation
+- `yarn start` - Inicia el frontend Next.js en modo desarrollo
+- `yarn chain` - Inicia la blockchain local (Foundry Anvil)
+- `yarn deploy` - Despliega contratos a la red local
+- `yarn compile` - Compila los contratos Solidity
+- `yarn test` - Ejecuta los tests de los contratos
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+### Testing y Verificación
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
+- `yarn foundry:test` - Ejecuta tests de Foundry
+- `yarn foundry:verify` - Verifica contratos en Etherscan
 
-## Contributing to Scaffold-ETH 2
+### Formato y Linting
 
-We welcome contributions to Scaffold-ETH 2!
+- `yarn format` - Formatea código (Prettier)
+- `yarn lint` - Ejecuta linters
 
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+## 🌐 Redes Configuradas
+
+El proyecto está configurado para trabajar con múltiples redes. Las principales son:
+
+### Red Local (Desarrollo)
+- **Foundry Anvil:** `http://127.0.0.1:8545`
+- Chain ID: 31337
+
+### Testnets
+- **Base Sepolia:** `https://sepolia.base.org` (Chain ID: 84532)
+- **Sepolia:** `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}` (Chain ID: 11155111)
+
+### Mainnets
+- **Base:** `https://mainnet.base.org` (Chain ID: 8453)
+- **Ethereum:** `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_API_KEY}` (Chain ID: 1)
+
+> **Nota:** Base Sepolia está disponible en la configuración de Foundry (`packages/foundry/foundry.toml`) y puede ser seleccionada para deployment de testnet.
+
+## 📝 Desarrollo de Contratos
+
+### Estructura de Contratos
+
+Los contratos se encuentran en `packages/foundry/contracts/`. Para desarrollar nuevos contratos:
+
+1. Crea tu contrato en `packages/foundry/contracts/`
+2. Compila con `yarn compile`
+3. Escribe tests en `packages/foundry/test/`
+4. Ejecuta tests con `yarn test`
+5. Crea un script de deployment en `packages/foundry/script/`
+
+### Interacción desde el Frontend
+
+Scaffold-ETH 2 proporciona hooks personalizados para interactuar con contratos:
+
+#### Leer datos de un contrato:
+```typescript
+const { data: someData } = useScaffoldReadContract({
+  contractName: "YourContract",
+  functionName: "functionName",
+  args: [arg1, arg2], // opcional
+});
+```
+
+#### Escribir datos a un contrato:
+```typescript
+const { writeContractAsync } = useScaffoldWriteContract({
+  contractName: "YourContract"
+});
+
+await writeContractAsync({
+  functionName: "functionName",
+  args: [arg1, arg2], // opcional
+  value: parseEther("0.1"), // opcional, para funciones payable
+});
+```
+
+## 🧪 Testing
+
+Los tests están escritos con Foundry. Para ejecutar:
+
+```bash
+yarn test
+```
+
+Los tests se encuentran en `packages/foundry/test/`. Todos los tests deben pasar antes de hacer commit.
+
+## 📚 Documentación
+
+- [Documentación de Scaffold-ETH 2](https://docs.scaffoldeth.io)
+- [Documentación de Foundry](https://book.getfoundry.sh/)
+- [Documentación de Next.js](https://nextjs.org/docs)
+- [PRD del Proyecto](./documents/giv-init-mvp-prd.md)
+
+## 🎯 Roadmap
+
+### ✅ Completado
+- [x] Setup inicial Scaffold-ETH 2 con Foundry
+- [x] Configuración de Base Sepolia
+- [x] Tests base funcionando
+
+### 🚧 En Progreso
+- [ ] Configuración de Base Sepolia para deployment
+- [ ] Implementación de hook Uniswap V4
+- [ ] Implementación de vault ERC-4626
+
+### 📋 Pendiente
+- [ ] Frontend: Selector de comunidades
+- [ ] Frontend: Multi-token input
+- [ ] Frontend: Dashboard de donaciones
+- [ ] Integración con Morpho Blue
+
+Ver más detalles en [tickets](./documents/tickets/).
+
+## 🤝 Contribuir
+
+Por favor, lee [CONTRIBUTING.md](./CONTRIBUTING.md) para más detalles sobre nuestro código de conducta y el proceso para enviar pull requests.
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia especificada en [LICENCE](./LICENCE).
+
+---
+
+**Construido con ❤️ usando Scaffold-ETH 2**
