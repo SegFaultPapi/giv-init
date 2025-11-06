@@ -128,6 +128,77 @@ El proyecto está configurado para trabajar con múltiples redes. Las principale
 
 > **Nota:** Base Sepolia está disponible en la configuración de Foundry (`packages/foundry/foundry.toml`) y puede ser seleccionada para deployment de testnet.
 
+## 🔐 Configuración de Variables de Entorno
+
+Para desarrollar y desplegar contratos, necesitas configurar variables de entorno. El proyecto incluye archivos `.env.example` como plantillas.
+
+### Configuración para Foundry (Smart Contracts)
+
+1. Copia el archivo de ejemplo:
+```bash
+cd packages/foundry
+cp .env.example .env
+```
+
+2. Edita `.env` con tus valores:
+
+**Variables Requeridas para Base Sepolia:**
+
+- `DEPLOYER_PRIVATE_KEY`: Tu clave privada (sin `0x`) para deployar contratos
+  - Obtén una cuenta usando: `yarn account:generate`
+  - **NUNCA** compartas o commitees esta clave
+
+- `ALCHEMY_API_KEY`: API key de Alchemy para RPC endpoints
+  - Obtén una gratuita en: https://dashboard.alchemyapi.io
+
+- `ETHERSCAN_API_KEY`: API key para verificar contratos en Basescan
+  - Obtén una en: https://basescan.org/apis (o usa Etherscan)
+
+**Variables Opcionales:**
+
+- `INFURA_API_KEY`: Alternativa a Alchemy
+- `BASESCAN_API_KEY`: Si prefieres usar una key específica para Basescan
+- `LOCALHOST_KEYSTORE_ACCOUNT`: Cuenta para desarrollo local (default: `scaffold-eth-default`)
+
+### Configuración para Next.js (Frontend)
+
+1. Copia el archivo de ejemplo:
+```bash
+cd packages/nextjs
+cp .env.example .env.local
+```
+
+2. Edita `.env.local` con tus valores:
+
+**Variables Requeridas:**
+
+- `NEXT_PUBLIC_ALCHEMY_API_KEY`: API key de Alchemy para el frontend
+- `NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID`: Project ID de WalletConnect para RainbowKit
+  - Obtén uno gratuito en: https://cloud.walletconnect.com
+
+**Nota:** Las variables con prefijo `NEXT_PUBLIC_` son expuestas al navegador. No incluyas secretos ahí.
+
+### Deployment en Base Sepolia
+
+Para desplegar contratos en Base Sepolia:
+
+```bash
+cd packages/foundry
+yarn deploy --network baseSepolia
+```
+
+Asegúrate de tener:
+- `DEPLOYER_PRIVATE_KEY` configurada en `.env`
+- Suficiente ETH en Base Sepolia en tu wallet (obtén ETH de test en: https://www.coinbase.com/faucets/base-ethereum-goerli-faucet)
+
+### Seguridad
+
+⚠️ **IMPORTANTE:**
+- **NUNCA** commitees archivos `.env` o `.env.local` con valores reales
+- Los archivos `.env` están protegidos por `.gitignore`
+- Siempre usa `.env.example` como referencia para documentar variables necesarias
+- Para producción, almacena variables de entorno en Vercel/System config
+
 ## 📝 Desarrollo de Contratos
 
 ### Estructura de Contratos

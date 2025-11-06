@@ -21,3 +21,10 @@ node_modules
 
 # cli
 dist
+
+# Environment variables - NEVER commit these!
+.env
+.env.local
+.env.*.local
+packages/foundry/.env
+packages/nextjs/.env.local
